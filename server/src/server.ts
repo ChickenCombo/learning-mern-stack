@@ -1,6 +1,6 @@
 import express, { Express, NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
-import workoutRoutes from "../routes/workouts";
+import workoutRoutes from "./routes/workouts";
 import * as dotenv from "dotenv";
 
 dotenv.config();
