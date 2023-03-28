@@ -1,4 +1,4 @@
-import { Workout } from "../Types";
+import { Workout } from "../utils/Types";
 
 interface WorkoutDetailsProps {
   key: string;
