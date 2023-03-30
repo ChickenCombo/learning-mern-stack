@@ -17,6 +17,10 @@ export const workoutsReducer = (state: WorkoutsState, action: Action) => {
       return {
         workouts: [action.payload, ...(state.workouts ?? [])],
       };
+    case WorkoutActions.DELETE_WORKOUT:
+      return {
+        workouts: state.workouts!.filter((w) => w._id !== action.payload._id),
+      };
     default:
       return state;
   }
@@ -28,7 +32,7 @@ export const WorkoutContextProvider = ({
   children: ReactNode;
 }) => {
   const [state, dispatch] = useReducer(workoutsReducer, {
-    workouts: null,
+    workouts: [],
   });
 
   return (

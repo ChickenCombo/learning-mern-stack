@@ -21,4 +21,5 @@ export interface WorkoutsContextType extends WorkoutsState {
 
 export type Action =
   | { type: WorkoutActions.SET_WORKOUTS; payload: Workout[] }
-  | { type: WorkoutActions.CREATE_WORKOUTS; payload: Workout };
+  | { type: WorkoutActions.CREATE_WORKOUTS; payload: Workout }
+  | { type: WorkoutActions.DELETE_WORKOUT; payload: Workout };

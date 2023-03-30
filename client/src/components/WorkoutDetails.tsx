@@ -1,4 +1,6 @@
+import { WorkoutActions } from "../utils/Actions";
 import { Workout } from "../utils/Types";
+import { useWorkoutsContext } from "./hooks/useWorkoutsContext";
 
 interface WorkoutDetailsProps {
   key: string;
@@ -7,6 +9,22 @@ interface WorkoutDetailsProps {
 
 const WorkoutDetails = (props: WorkoutDetailsProps) => {
   const { workout } = props;
+  const { dispatch } = useWorkoutsContext();
+
+  const handleOnDeleteClick = async () => {
+    const response = await fetch(
+      "http://localhost:5000/api/workouts/" + workout._id,
+      {
+        method: "DELETE",
+      }
+    );
+
+    const json = await response.json();
+
+    if (response.ok) {
+      dispatch({ type: WorkoutActions.DELETE_WORKOUT, payload: json });
+    }
+  };
 
   return (
     <div className="workout-details">
@@ -22,6 +40,7 @@ const WorkoutDetails = (props: WorkoutDetailsProps) => {
         {workout.reps}
       </p>
       <p>{workout.createdAt.toLocaleString()}</p>
+      <span onClick={handleOnDeleteClick}>Delete</span>
     </div>
   );
 };
