@@ -5,10 +5,11 @@ import { WorkoutActions } from "../utils/Actions";
 const WorkoutForm = () => {
   const { dispatch } = useWorkoutsContext();
 
-  const [title, setTitle] = useState<string>("");
-  const [load, setLoad] = useState<number>(0);
-  const [reps, setReps] = useState<number>(0);
+  const [title, setTitle] = useState<string | null>(null);
+  const [load, setLoad] = useState<number | null>(null);
+  const [reps, setReps] = useState<number | null>(null);
   const [error, setError] = useState<any | null>(null);
+  const [emptyFields, setEmptyFields] = useState<Array<string>>([]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,14 +28,16 @@ const WorkoutForm = () => {
 
     if (!response.ok) {
       setError(json.error);
+      setEmptyFields(json.emptyFields);
     }
 
     if (response.ok) {
       setError(null);
       console.log("Workout added: ", json);
-      setTitle("");
-      setLoad(0);
-      setReps(0);
+      setEmptyFields([]);
+      setTitle(null);
+      setLoad(null);
+      setReps(null);
 
       dispatch({ type: WorkoutActions.CREATE_WORKOUTS, payload: json });
     }
@@ -51,6 +54,7 @@ const WorkoutForm = () => {
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setTitle(e.target.value)
           }
+          className={emptyFields.includes("title") ? "error" : ""}
         />
       </div>
       <div>
@@ -61,6 +65,7 @@ const WorkoutForm = () => {
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setLoad(+e.target.value)
           }
+          className={emptyFields.includes("load") ? "error" : ""}
         />
       </div>
       <div>
@@ -71,6 +76,7 @@ const WorkoutForm = () => {
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setReps(+e.target.value)
           }
+          className={emptyFields.includes("reps") ? "error" : ""}
         />
       </div>
       <button type="submit">Submit</button>

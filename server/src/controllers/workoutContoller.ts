@@ -25,11 +25,22 @@ export const getWorkout = async (req: Request, res: Response) => {
 
 export const createWorkout = async (req: Request, res: Response) => {
   const { title, reps, load } = req.body;
+
+  let emptyFields: Array<string> = [];
+
+  if (!title) emptyFields.push("title");
+  if (!load) emptyFields.push("load");
+  if (!reps) emptyFields.push("reps");
+
+  if (emptyFields.length > 0) {
+    return res.status(400).json({ error: 'Please fill in all the missing fields!', emptyFields });
+  }
+
   try {
     const workout = await Workout.create({ title, load, reps });
     res.status(200).json(workout);
   } catch (error) {
-    console.log(error);
+    res.status(400).json({ error: "Invalid input"});
   }
 };
 
