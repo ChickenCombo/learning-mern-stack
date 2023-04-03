@@ -1,6 +1,8 @@
 import { WorkoutActions } from "../utils/Actions";
 import { Workout } from "../utils/Types";
 import { useWorkoutsContext } from "./hooks/useWorkoutsContext";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import Delete from "../assets/delete.svg";
 
 interface WorkoutDetailsProps {
   key: string;
@@ -39,8 +41,14 @@ const WorkoutDetails = (props: WorkoutDetailsProps) => {
         <strong>Reps: </strong>
         {workout.reps}
       </p>
-      <p>{workout.createdAt.toLocaleString()}</p>
-      <span onClick={handleOnDeleteClick}>Delete</span>
+      <p>
+        {formatDistanceToNow(new Date(workout.createdAt.toLocaleString()), {
+          addSuffix: true,
+        })}
+      </p>
+      <span onClick={handleOnDeleteClick}>
+        <img src={Delete} alt="Delete" width={20} height={20} />
+      </span>
     </div>
   );
 };
