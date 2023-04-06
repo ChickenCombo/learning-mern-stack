@@ -2,6 +2,7 @@ import express, { Express, NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 import cors from 'cors';
 import workoutRoutes from "./routes/workouts";
+import userRoutes from "./routes/user";
 import * as dotenv from "dotenv";
 
 dotenv.config();
@@ -20,6 +21,8 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use("/api/workouts", workoutRoutes);
+
+app.use("/api/user", userRoutes);
 
 mongoose
   .connect(mongo)
