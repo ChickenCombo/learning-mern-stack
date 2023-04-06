@@ -40,7 +40,8 @@ export const createWorkout = async (req: Request, res: Response) => {
     const workout = await Workout.create({ title, load, reps });
     res.status(200).json(workout);
   } catch (error) {
-    res.status(400).json({ error: "Invalid input"});
+    const errorMessage = error instanceof Error ? error.message : "An error occurred while creating a new workout.";
+    res.status(400).json({ error: errorMessage });
   }
 };
 
