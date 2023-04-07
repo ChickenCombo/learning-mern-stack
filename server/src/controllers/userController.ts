@@ -8,7 +8,18 @@ const createToken = (_id: string) => {
 }
 
 export const loginUser = async (req: Request, res: Response) => {
-  res.json({ message: 'User logged in' })
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.login(email, password);
+
+    const token = createToken(user._id);
+
+    res.status(200).json({ email, token });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'An error occurred while logging in.';
+    res.status(400).json({ error: errorMessage });
+  }
 }
 
 export const signupUser = async (req: Request, res: Response) => {
