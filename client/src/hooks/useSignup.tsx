@@ -4,7 +4,7 @@ import { AuthActions } from "../utils/Actions";
 
 export const useSignup = () => {
   const [isError, setIsError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean | undefined>(undefined);
 
   const { dispatch } = useAuthContext();
 
