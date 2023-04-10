@@ -3,3 +3,8 @@ export enum WorkoutActions {
   CREATE_WORKOUTS = "CREATE_WORKOUT",
   DELETE_WORKOUT = "DELETE_WORKOUT",
 }
+
+export enum AuthActions {
+  LOGIN = "LOGIN",
+  LOGOUT = "LOGOUT",
+}

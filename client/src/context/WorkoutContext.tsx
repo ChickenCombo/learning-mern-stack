@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useReducer } from "react";
-import { Action, WorkoutsContextType, WorkoutsState } from "../utils/Types";
+import { WorkoutAction, WorkoutsContextType, WorkoutsState } from "../utils/Types";
 import { WorkoutActions } from "../utils/Actions";
 
 export const WorkoutsContext = createContext<WorkoutsContextType>({
@@ -7,7 +7,7 @@ export const WorkoutsContext = createContext<WorkoutsContextType>({
   dispatch: () => undefined,
 });
 
-export const workoutsReducer = (state: WorkoutsState, action: Action) => {
+export const workoutsReducer = (state: WorkoutsState, action: WorkoutAction) => {
   switch (action.type) {
     case WorkoutActions.SET_WORKOUTS:
       return {

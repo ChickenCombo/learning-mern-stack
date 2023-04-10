@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { WorkoutActions } from "./Actions";
+import { AuthActions, WorkoutActions } from "./Actions";
 
 export interface Workout {
   _id: string;
@@ -16,10 +16,22 @@ export interface WorkoutsState {
 }
 
 export interface WorkoutsContextType extends WorkoutsState {
-  dispatch: Dispatch<Action>;
+  dispatch: Dispatch<WorkoutAction>;
 }
 
-export type Action =
+export type WorkoutAction =
   | { type: WorkoutActions.SET_WORKOUTS; payload: Workout[] }
   | { type: WorkoutActions.CREATE_WORKOUTS; payload: Workout }
   | { type: WorkoutActions.DELETE_WORKOUT; payload: Workout };
+
+export interface AuthState {
+  user: string | null;
+}
+
+export interface AuthContextType extends AuthState {
+  dispatch: Dispatch<AuthAction>;
+}
+
+export type AuthAction =
+  | { type: AuthActions.LOGIN; payload: string }
+  | { type: AuthActions.LOGOUT };

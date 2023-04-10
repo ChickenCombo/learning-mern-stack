@@ -1,6 +1,6 @@
 import { WorkoutActions } from "../utils/Actions";
 import { Workout } from "../utils/Types";
-import { useWorkoutsContext } from "./hooks/useWorkoutsContext";
+import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import Delete from "../assets/delete.svg";
 
