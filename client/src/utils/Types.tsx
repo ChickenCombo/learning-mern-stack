@@ -24,8 +24,12 @@ export type WorkoutAction =
   | { type: WorkoutActions.CREATE_WORKOUTS; payload: Workout }
   | { type: WorkoutActions.DELETE_WORKOUT; payload: Workout };
 
+export interface AuthenticatedUser {
+  email: string;
+  token: string;
+}
 export interface AuthState {
-  user: string | null;
+  user: AuthenticatedUser | null;
 }
 
 export interface AuthContextType extends AuthState {
@@ -33,5 +37,5 @@ export interface AuthContextType extends AuthState {
 }
 
 export type AuthAction =
-  | { type: AuthActions.LOGIN; payload: string }
+  | { type: AuthActions.LOGIN; payload: AuthenticatedUser }
   | { type: AuthActions.LOGOUT };
