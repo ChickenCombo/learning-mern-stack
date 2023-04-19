@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/userModel";
 
 interface UserRequest extends Request {
-  user?: unknown;
+  user?: any;
 }
 
 const requireAuth = async (

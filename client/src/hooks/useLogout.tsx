@@ -1,13 +1,16 @@
-import { AuthActions } from "../utils/Actions";
+import { AuthActions, WorkoutActions } from "../utils/Actions";
 import { useAuthContext } from "./useAuthContext";
+import { useWorkoutsContext } from "./useWorkoutsContext";
 
 export const useLogout = () => {
-  const { dispatch } = useAuthContext();
+  const { dispatch: authDispatch } = useAuthContext();
+  const { dispatch: workoutsDispatch } = useWorkoutsContext();
 
   const logout = () => {
     localStorage.removeItem("user");
 
-    dispatch({ type: AuthActions.LOGOUT });
+    authDispatch({ type: AuthActions.LOGOUT });
+    workoutsDispatch({ type: WorkoutActions.SET_WORKOUTS, payload: [] });
   };
 
   return { logout };

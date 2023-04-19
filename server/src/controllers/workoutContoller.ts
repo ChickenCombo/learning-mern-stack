@@ -2,8 +2,13 @@ import { Request, Response } from "express";
 import mongoose from "mongoose";
 import Workout from "../models/workoutModel";
 
-export const getWorkouts = async (req: Request, res: Response) => {
-  const workouts = await Workout.find({}).sort({ createdAt: -1 });
+interface UserRequest extends Request {
+  user?: any;
+}
+
+export const getWorkouts = async (req: UserRequest, res: Response) => {
+  const user_id = req.user._id;
+  const workouts = await Workout.find({ user_id }).sort({ createdAt: -1 });
   res.status(200).json(workouts);
 };
 
@@ -23,7 +28,7 @@ export const getWorkout = async (req: Request, res: Response) => {
   res.status(200).json(workout);
 };
 
-export const createWorkout = async (req: Request, res: Response) => {
+export const createWorkout = async (req: UserRequest, res: Response) => {
   const { title, reps, load } = req.body;
 
   let emptyFields: Array<string> = [];
@@ -33,14 +38,20 @@ export const createWorkout = async (req: Request, res: Response) => {
   if (!reps) emptyFields.push("reps");
 
   if (emptyFields.length > 0) {
-    return res.status(400).json({ error: 'Please fill in all the missing fields!', emptyFields });
+    return res
+      .status(400)
+      .json({ error: "Please fill in all the missing fields!", emptyFields });
   }
 
   try {
-    const workout = await Workout.create({ title, load, reps });
+    const user_id = req.user._id;
+    const workout = await Workout.create({ title, load, reps, user_id });
     res.status(200).json(workout);
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : "An error occurred while creating a new workout.";
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : "An error occurred while creating a new workout.";
     res.status(400).json({ error: errorMessage });
   }
 };
