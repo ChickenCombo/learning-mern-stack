@@ -3,6 +3,7 @@ import { Workout } from "../utils/Types";
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import Delete from "../assets/delete.svg";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 interface WorkoutDetailsProps {
   key: string;
@@ -12,12 +13,20 @@ interface WorkoutDetailsProps {
 const WorkoutDetails = (props: WorkoutDetailsProps) => {
   const { workout } = props;
   const { dispatch } = useWorkoutsContext();
+  const { user } = useAuthContext();
 
   const handleOnDeleteClick = async () => {
+    if (!user) {
+      return;
+    }
+
     const response = await fetch(
-      "http://localhost:5000/api/workouts/" + workout._id,
+      `http://localhost:5000/api/workouts/` + workout._id,
       {
         method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${user?.token}`,
+        },
       }
     );
 
